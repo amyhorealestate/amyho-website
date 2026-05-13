@@ -30,6 +30,10 @@
 </nav>
 
 <header>
+  <div class="article-list-container">
+  <input type="text" id="searchInput" placeholder="搜索文章标题或分类..." 
+         style="width: 100%; padding: 1rem; border: 1px solid var(--line); background: #fff; font-size: 1rem; margin-bottom: 2rem; font-family: 'Noto Sans SC', sans-serif;">
+</div>
   <h1>市场洞察</h1>
   <p style="color:var(--muted); margin-top:1rem;">分享奥克兰房产趋势与置业心得</p>
 </header>
@@ -39,28 +43,55 @@
 </div>
 
 <script>
+  let allArticles = []; // 存放原始數據供搜尋使用
+
   async function fetchArticles() {
     try {
       const response = await fetch('/articles/list.json');
-      const articles = await response.json();
-      const listContainer = document.getElementById('article-list');
-      listContainer.innerHTML = '';
+      allArticles = await response.json();
+      
+      // 1. 日期由新到舊排序
+      allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-      articles.forEach(post => {
-        const card = document.createElement('a');
-        card.className = 'post-card';
-        // 這裡會自動導向該文章的簡體版檔案
-        card.href = `/articles/${post.id}-cn.html`;
-        card.innerHTML = `
-          <div class="post-date">${post.date} | ${post.category}</div>
-          <div class="post-title">${post.title_cn}</div>
-        `;
-        listContainer.appendChild(card);
-      });
+      // 2. 初始顯示所有文章
+      displayArticles(allArticles);
     } catch (e) {
       document.getElementById('article-list').innerHTML = '<p>暂无文章，请稍后再试。</p>';
     }
   }
+
+  // 渲染列表的通用函數
+  function displayArticles(articles) {
+    const listContainer = document.getElementById('article-list');
+    listContainer.innerHTML = '';
+
+    if (articles.length === 0) {
+      listContainer.innerHTML = '<p style="color:var(--muted); padding: 2rem 0;">找不到相关的文章。</p>';
+      return;
+    }
+
+    articles.forEach(post => {
+      const card = document.createElement('a');
+      card.className = 'post-card';
+      card.href = `/articles/${post.id}-cn.html`;
+      card.innerHTML = `
+        <div class="post-date">${post.date} | ${post.category}</div>
+        <div class="post-title">${post.title_cn}</div>
+      `;
+      listContainer.appendChild(card);
+    });
+  }
+
+  // 3. 監聽搜尋框輸入事件
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    const keyword = e.target.value.toLowerCase();
+    const filtered = allArticles.filter(post => 
+      post.title_cn.toLowerCase().includes(keyword) || 
+      post.category.toLowerCase().includes(keyword)
+    );
+    displayArticles(filtered);
+  });
+
   fetchArticles();
 </script>
 
