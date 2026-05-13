@@ -3,31 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>繁體文章列表｜Amy Ho</title>
+  <title>市場洞察｜Amy Ho</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=Noto+Serif+TC:wght@300;400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    /* 這裡完整沿用你首頁的配色與風格 */
-    :root {
-      --ink: #1a1714; --paper: #f5f0e8; --accent: #8b6f47; --muted: #7a6e63; --line: rgba(139, 111, 71, 0.25);
-    }
+    :root { --ink: #1a1714; --paper: #f5f0e8; --accent: #8b6f47; --muted: #7a6e63; --line: rgba(139, 111, 71, 0.25); }
     body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', 'Noto Serif TC', sans-serif; margin: 0; }
-    
-    /* 導覽列與首頁一致 */
     nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; background: rgba(245, 240, 232, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); z-index: 1000; }
-    
     header { padding: 10rem 2rem 2rem; max-width: 900px; margin: 0 auto; }
     h1 { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; }
-
-    /* 文章列表的樣式 */
     .article-list-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
-    .post-card { 
-      display: block; border: 1px solid var(--line); padding: 2rem; margin-bottom: 1.5rem;
-      text-decoration: none; color: inherit; transition: 0.3s; background: transparent;
-    }
+    .post-card { display: block; border: 1px solid var(--line); padding: 2rem; margin-bottom: 1.5rem; text-decoration: none; color: inherit; transition: 0.3s; background: transparent; }
     .post-card:hover { border-color: var(--accent); background: #fff; }
     .post-date { color: var(--accent); font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
     .post-title { font-size: 1.5rem; margin-top: 0.5rem; font-weight: 400; }
+    #searchInput { width: 100%; padding: 1rem; border: 1px solid var(--line); background: #fff; font-size: 1rem; margin-bottom: 2rem; font-family: 'Noto Serif TC', serif; }
   </style>
 </head>
 <body>
@@ -37,42 +27,71 @@
     <span style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">Amy Ho</span><br>
     <span style="font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted);">房產觀測站</span>
   </div>
-  <a href="/" style="text-decoration:none; color:var(--ink); font-size:0.9rem;">回首頁</a>
+  <a href="/" style="text-decoration:none; color:var(--ink); font-size:0.9rem;">返回首頁</a>
 </nav>
 
 <header>
-  <h1>繁體文章列表</h1>
+  <h1>市場洞察</h1>
   <p style="color:var(--muted); margin-top:1rem;">分享奧克蘭房產趨勢與置業心得</p>
 </header>
 
-<div class="article-list-container" id="article-list">
-  <p>正在載入最新文章...</p>
+<div class="article-list-container">
+  <input type="text" id="searchInput" placeholder="搜尋文章標題或分類...">
+  <div id="article-list">
+    <p>正在載入最新文章...</p>
+  </div>
 </div>
 
 <script>
-  // 自動抓取清單的邏輯
+  let allArticles = [];
+
   async function fetchArticles() {
     try {
-      // 之後你要建立一個 articles/list.json
       const response = await fetch('/articles/list.json');
-      const articles = await response.json();
-      const listContainer = document.getElementById('article-list');
-      listContainer.innerHTML = '';
+      allArticles = await response.json();
+      
+      // 1. 按日期從新到舊排序
+      allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-      articles.forEach(post => {
-        const card = document.createElement('a');
-        card.className = 'post-card';
-       card.href = `/articles/${post.id}-tw.html`;
-        card.innerHTML = `
-          <div class="post-date">${post.date} | ${post.category}</div>
-          <div class="post-title">${post.title}</div>
-        `;
-        listContainer.appendChild(card);
-      });
+      // 2. 初始顯示
+      displayArticles(allArticles);
     } catch (e) {
       document.getElementById('article-list').innerHTML = '<p>目前尚無文章，請稍後再試。</p>';
     }
   }
+
+  function displayArticles(articles) {
+    const listContainer = document.getElementById('article-list');
+    listContainer.innerHTML = '';
+
+    if (articles.length === 0) {
+      listContainer.innerHTML = '<p style="color:var(--muted); padding: 2rem 0;">找不到相關的文章。</p>';
+      return;
+    }
+
+    articles.forEach(post => {
+      const card = document.createElement('a');
+      card.className = 'post-card';
+      // 連結到繁體版檔案
+      card.href = `/articles/${post.id}-tw.html`;
+      card.innerHTML = `
+        <div class="post-date">${post.date} | ${post.category}</div>
+        <div class="post-title">${post.title_tw}</div>
+      `;
+      listContainer.appendChild(card);
+    });
+  }
+
+  // 3. 搜尋監聽
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    const keyword = e.target.value.toLowerCase();
+    const filtered = allArticles.filter(post => 
+      post.title_tw.toLowerCase().includes(keyword) || 
+      post.category.toLowerCase().includes(keyword)
+    );
+    displayArticles(filtered);
+  });
+
   fetchArticles();
 </script>
 
