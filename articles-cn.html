@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>市场洞察｜Amy Ho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=Noto+Sans+SC:wght@300;400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #1a1714; --paper: #f5f0e8; --accent: #8b6f47; --muted: #7a6e63; --line: rgba(139, 111, 71, 0.25); }
+    body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', 'Noto Sans SC', sans-serif; margin: 0; }
+    nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; background: rgba(245, 240, 232, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); z-index: 1000; }
+    header { padding: 10rem 2rem 2rem; max-width: 900px; margin: 0 auto; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; }
+    .article-list-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .post-card { display: block; border: 1px solid var(--line); padding: 2rem; margin-bottom: 1.5rem; text-decoration: none; color: inherit; transition: 0.3s; background: transparent; }
+    .post-card:hover { border-color: var(--accent); background: #fff; }
+    .post-date { color: var(--accent); font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .post-title { font-size: 1.5rem; margin-top: 0.5rem; font-weight: 400; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <span style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">Amy Ho</span><br>
+    <span style="font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted);">房产观测站</span>
+  </div>
+  <a href="/index-cn.html" style="text-decoration:none; color:var(--ink); font-size:0.9rem;">返回首页</a>
+</nav>
+
+<header>
+  <h1>市场洞察</h1>
+  <p style="color:var(--muted); margin-top:1rem;">分享奥克兰房产趋势与置业心得</p>
+</header>
+
+<div class="article-list-container" id="article-list">
+  <p>正在载入最新文章...</p>
+</div>
+
+<script>
+  async function fetchArticles() {
+    try {
+      const response = await fetch('/articles/list.json');
+      const articles = await response.json();
+      const listContainer = document.getElementById('article-list');
+      listContainer.innerHTML = '';
+
+      articles.forEach(post => {
+        const card = document.createElement('a');
+        card.className = 'post-card';
+        // 這裡會自動導向該文章的簡體版檔案
+        card.href = `/articles/${post.id}-cn.html`;
+        card.innerHTML = `
+          <div class="post-date">${post.date} | ${post.category}</div>
+          <div class="post-title">${post.title_cn}</div>
+        `;
+        listContainer.appendChild(card);
+      });
+    } catch (e) {
+      document.getElementById('article-list').innerHTML = '<p>暂无文章，请稍后再试。</p>';
+    }
+  }
+  fetchArticles();
+</script>
+
+</body>
+</html>
