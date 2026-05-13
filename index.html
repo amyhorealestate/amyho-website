@@ -12,14 +12,11 @@
       --paper:      #f5f0e8;
       --warm-mid:   #c8b89a;
       --accent:     #8b6f47;
-      --accent-deep:#5c4530;
       --muted:      #7a6e63;
       --line:       rgba(139, 111, 71, 0.25);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
     body {
       background: var(--paper);
       color: var(--ink);
@@ -28,207 +25,113 @@
       overflow-x: hidden;
     }
 
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
-
+    /* 導覽列 */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 1000; /* 提高層級 */
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.25rem 2rem;
-      background: rgba(245, 240, 232, 0.92); /* 微調透明度 */
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(245, 240, 232, 0.95);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
     }
 
-    .nav-brand { display: flex; flex-direction: column; gap: 0.1rem; text-decoration: none; color: var(--ink); }
-    .nav-brand .brand-en { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; letter-spacing: 0.08em; line-height: 1; }
-    .nav-brand .brand-zh { font-family: 'Noto Serif TC', serif; font-size: 0.62rem; font-weight: 300; color: var(--muted); letter-spacing: 0.2em; }
-
-    .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 4px; background: none; border: none; z-index: 110; }
-    .hamburger span { display: block; width: 26px; height: 1.5px; background: var(--ink); transition: transform 0.35s ease, opacity 0.25s ease; transform-origin: center; }
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
+    /* 選單預設必須隱藏在螢幕右側外 (translateX 100%) */
     .nav-menu {
       position: fixed; top: 0; right: 0;
       width: min(320px, 85vw); height: 100dvh;
       background: var(--ink);
-      padding: 6rem 2.5rem 3rem;
-      transform: translateX(100%);
-      transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
-      z-index: 105;
+      padding: 6rem 2.5rem;
+      transform: translateX(100%); 
+      transition: transform 0.4s ease;
+      z-index: 1001;
       display: flex; flex-direction: column; gap: 2rem;
     }
     .nav-menu.open { transform: translateX(0); }
 
     .nav-overlay {
       position: fixed; inset: 0;
-      background: rgba(26,23,20,0.5);
+      background: rgba(0,0,0,0.5);
       opacity: 0; pointer-events: none;
-      transition: opacity 0.35s ease;
-      z-index: 104;
+      z-index: 1000;
+      transition: opacity 0.3s;
     }
     .nav-overlay.open { opacity: 1; pointer-events: auto; }
 
-    .nav-menu a { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--paper); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid rgba(245,240,232,0.12); padding-bottom: 1rem; transition: color 0.2s; display: block; }
-    .nav-menu a:hover { color: var(--warm-mid); }
-    .nav-menu a .zh-sub { display: block; font-family: 'Noto Serif TC', serif; font-size: 0.65rem; font-weight: 300; color: var(--warm-mid); letter-spacing: 0.18em; margin-top: 0.25rem; }
-
+    /* 標題區域：增加 padding-top 確保不被遮住 */
     header {
-      position: relative; z-index: 1;
-      min-height: 100dvh;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
-      /* 修正：增加 padding-top 確保標題不被導覽列遮住 */
-      padding: 10rem 2rem 4rem; 
+      padding: 12rem 2rem 4rem; /* 從 8rem 增加到 12rem */
       max-width: 900px; margin: 0 auto;
+      text-align: left;
     }
 
-    .hero-label { font-family: 'Noto Serif TC', serif; font-size: 0.62rem; font-weight: 300; letter-spacing: 0.35em; color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem; animation: fadeUp 0.8s ease both; }
-    .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 9vw, 7rem); font-weight: 300; line-height: 0.92; color: var(--ink); margin-bottom: 0.4rem; animation: fadeUp 0.9s 0.1s ease both; }
-    .hero-name-zh { font-family: 'Noto Serif TC', serif; font-size: clamp(1.1rem, 3vw, 1.6rem); font-weight: 300; color: var(--muted); letter-spacing: 0.25em; margin-bottom: 2.5rem; animation: fadeUp 0.9s 0.2s ease both; }
-    .hero-divider { width: 48px; height: 1px; background: var(--accent); margin-bottom: 2rem; animation: expandW 0.8s 0.35s ease both; }
-    .hero-bio { font-family: 'Noto Serif TC', serif; font-size: clamp(0.88rem, 2vw, 1rem); font-weight: 300; line-height: 2; color: var(--muted); max-width: 540px; animation: fadeUp 0.9s 0.4s ease both; }
-    .hero-bio strong { color: var(--ink); font-weight: 400; }
+    .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 8vw, 6rem); font-weight: 300; margin-bottom: 0.5rem; }
+    .hero-bio { line-height: 2; color: var(--muted); max-width: 600px; }
 
-    section.articles { position: relative; z-index: 1; padding: 5rem 2rem 8rem; max-width: 900px; margin: 0 auto; }
-    .section-label { font-family: 'Noto Serif TC', serif; font-size: 0.6rem; font-weight: 300; letter-spacing: 0.35em; color: var(--accent); text-transform: uppercase; margin-bottom: 3rem; }
-
-    .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
-
-    .article-card { display: flex; flex-direction: column; border: 1px solid var(--line); padding: 2rem 1.75rem; text-decoration: none; background: rgba(255,255,255,0.35); backdrop-filter: blur(4px); transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease; position: relative; overflow: hidden; }
-    .article-card::before { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
-    .article-card:hover { background: rgba(255,255,255,0.6); border-color: var(--accent); transform: translateY(-3px); }
-    .article-card:hover::before { transform: scaleX(1); }
-
-    .card-lang { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 1rem; }
-    .card-title { font-family: 'Noto Serif TC', serif; font-size: 1.25rem; font-weight: 400; color: var(--ink); line-height: 1.4; margin-bottom: 0.75rem; }
-    .card-desc { font-size: 0.78rem; font-weight: 300; color: var(--muted); line-height: 1.7; flex: 1; }
-    .card-arrow { margin-top: 1.75rem; font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; color: var(--accent); letter-spacing: 0.12em; display: flex; align-items: center; gap: 0.5rem; }
-    .card-arrow::after { content: '→'; transition: transform 0.25s ease; }
-    .article-card:hover .card-arrow::after { transform: translateX(5px); }
-
-    .article-card.coming-soon { opacity: 0.6; pointer-events: none; border-style: dashed; }
-    .coming-badge { display: inline-block; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.15em; color: var(--paper); background: var(--accent); padding: 0.2rem 0.55rem; margin-bottom: 1rem; text-transform: uppercase; }
-
-    footer { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 2.5rem 2rem; max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: var(--muted); letter-spacing: 0.08em; }
-    .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { font-size: 0.72rem; font-weight: 300; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--accent); }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes expandW { from { width: 0; } to { width: 48px; } }
+    /* 按鈕樣式 */
+    .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; padding: 2rem; max-width: 900px; margin: 0 auto; }
+    .article-card { border: 1px solid var(--line); padding: 2rem; text-decoration: none; color: inherit; display: block; transition: 0.3s; }
+    .article-card:hover { border-color: var(--accent); background: #fff; }
 
     @media (max-width: 480px) {
-      nav { padding: 1rem 1.25rem; }
-      /* 修正：在手機版增加更多留白，確保 Amy Ho 名字不被遮住 */
-      header { padding: 8rem 1.25rem 3rem; }
-      section.articles { padding: 3rem 1.25rem 5rem; }
+      header { padding: 10rem 1.25rem 3rem; }
+      nav { padding: 1rem; }
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-brand" href="/">
-    <span class="brand-en">Amy Ho</span>
-    <span class="brand-zh">房產觀測站</span>
-  </a>
-  <button class="hamburger" id="menuBtn" aria-label="開啟選單">
-    <span></span><span></span><span></span>
+  <div class="nav-brand">
+    <span style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">Amy Ho</span><br>
+    <span style="font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted);">房產觀測站</span>
+  </div>
+  <button class="hamburger" id="menuBtn" style="background:none; border:none; cursor:pointer;">
+    <div style="width:25px; height:2px; background:var(--ink); margin:4px 0;"></div>
+    <div style="width:25px; height:2px; background:var(--ink); margin:4px 0;"></div>
+    <div style="width:25px; height:2px; background:var(--ink); margin:4px 0;"></div>
   </button>
 </nav>
 
 <div class="nav-overlay" id="navOverlay"></div>
-
-<nav class="nav-menu" id="navMenu">
-  <a href="/">首頁 <span class="zh-sub">Home</span></a>
-  <a href="/articles-tw">繁體文章 <span class="zh-sub">Traditional Chinese</span></a>
-  <a href="/articles-cn">簡體文章 <span class="zh-sub">Simplified Chinese</span></a>
-  <a href="mailto:amy@amyhorealestate.com">聯絡我 <span class="zh-sub">Contact</span></a>
-</nav>
+<div class="nav-menu" id="navMenu">
+  <a href="#" style="color:white; text-decoration:none; font-size:1.5rem;">首頁</a>
+  <a href="/articles-tw" style="color:white; text-decoration:none; font-size:1.5rem;">繁體文章</a>
+  <a href="/articles-cn" style="color:white; text-decoration:none; font-size:1.5rem;">簡體文章</a>
+  <a href="mailto:amy@amyhorealestate.com" style="color:white; text-decoration:none; font-size:1.5rem;">聯絡我</a>
+</div>
 
 <header>
-  <p class="hero-label">Barfoot &amp; Thompson · Parnell · Auckland</p>
+  <p style="color:var(--accent); letter-spacing:0.2em; font-size:0.7rem; margin-bottom:1rem;">BARFOOT & THOMPSON · PARNELL · AUCKLAND</p>
   <h1 class="hero-name">Amy Ho</h1>
-  <p class="hero-name-zh">何宜蓁 · 房產經紀人</p>
-  <div class="hero-divider"></div>
-  <p class="hero-bio">
-    深耕奧克蘭房產市場，<strong>專注服務華人買家與賣家</strong>。<br>
-    以「房產觀測站」為平台，持續提供市場分析、投資趨勢與在地洞察，<br>
-    協助客戶在奧克蘭複雜的房市中做出清晰決策。<br><br>
-    隸屬 <strong>Barfoot &amp; Thompson Parnell 辦公室</strong>，
-    提供繁體中文、簡體中文與英文全語言服務。
-  </p>
+  <p style="font-size:1.2rem; color:var(--muted); margin-bottom:2rem;">何宜蓁 · 房產經紀人</p>
+  <p class="hero-bio">深耕奧克蘭房產市場，專注服務華人買家與賣家。協助客戶在奧克蘭複雜的房市中做出清晰決策。</p>
 </header>
 
-<section class="articles">
-  <p class="section-label">市場觀察 · Property Insights</p>
-  <div class="article-grid">
-
-    <a class="article-card" href="/articles-tw">
-      <span class="card-lang">Traditional Chinese</span>
-      <h2 class="card-title">繁體文章列表</h2>
-      <p class="card-desc">針對台灣、香港、澳門及海外華人讀者，深入分析奧克蘭房產市場動態、投資策略與生活指南。</p>
-      <span class="card-arrow">閱讀文章</span>
-    </a>
-
-    <a class="article-card" href="/articles-cn">
-      <span class="card-lang">Simplified Chinese</span>
-      <h2 class="card-title">简体文章列表</h2>
-      <p class="card-desc">为中国大陆及东南亚华人读者提供奥克兰房产市场资讯、移民置业建议及投资分析。</p>
-      <span class="card-arrow">阅读文章</span>
-    </a>
-
-    <div class="article-card coming-soon">
-      <span class="coming-badge">Coming Soon</span>
-      <span class="card-lang">English</span>
-      <h2 class="card-title">English Articles</h2>
-      <p class="card-desc">Auckland property market insights, investment analysis and local guides for English-speaking readers.</p>
-      <span class="card-arrow">Coming Soon</span>
-    </div>
-
-  </div>
-</section>
-
-<footer>
-  <span class="footer-brand">© 2025 Amy Ho · 房產觀測站 · Barfoot &amp; Thompson</span>
-  <div class="footer-links">
-    <a href="https://www.amyhorealestate.com" target="_blank">Website</a>
-    <a href="mailto:amy@amyhorealestate.com">Email</a>
-    <a href="#">WeChat</a>
-    <a href="#">Xiaohongshu</a>
-  </div>
-</footer>
+<div class="article-grid">
+  <a href="/articles-tw" class="article-card">
+    <h3>繁體文章列表</h3>
+    <p>市場動態、投資策略與生活指南</p>
+  </a>
+  <a href="/articles-cn" class="article-card">
+    <h3>简体文章列表</h3>
+    <p>奥克兰房产资讯與移民置业建议</p>
+  </a>
+</div>
 
 <script>
-  const btn     = document.getElementById('menuBtn');
-  const menu    = document.getElementById('navMenu');
+  const btn = document.getElementById('menuBtn');
+  const menu = document.getElementById('navMenu');
   const overlay = document.getElementById('navOverlay');
 
-  function toggleMenu(open) {
-    btn.classList.toggle('open', open);
-    menu.classList.toggle('open', open);
-    overlay.classList.toggle('open', open);
-    document.body.style.overflow = open ? 'hidden' : '';
-  }
-
-  btn.addEventListener('click', () => toggleMenu(!menu.classList.contains('open')));
-  overlay.addEventListener('click', () => toggleMenu(false));
-  document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => toggleMenu(false));
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('open');
+    overlay.classList.toggle('open');
   });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') toggleMenu(false);
+
+  overlay.addEventListener('click', () => {
+    menu.classList.remove('open');
+    overlay.classList.remove('open');
   });
 </script>
 
