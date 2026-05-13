@@ -62,7 +62,7 @@
       articles.forEach(post => {
         const card = document.createElement('a');
         card.className = 'post-card';
-        card.href = `/articles/${post.id}.html`;
+       card.href = `/articles/${post.id}-tw.html`;
         card.innerHTML = `
           <div class="post-date">${post.date} | ${post.category}</div>
           <div class="post-title">${post.title}</div>
