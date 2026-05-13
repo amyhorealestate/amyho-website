@@ -1,10 +1,50 @@
-<div class="nav-menu" id="navMenu">
-  <div style="padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 1rem; display: flex; gap: 1rem;">
-    <a href="/" style="border: none; color: var(--accent); font-weight: 600; padding: 0;">繁體</a>
-    <span style="color: white; opacity: 0.3;">|</span>
-    <a href="/index-cn.html" style="border: none; opacity: 0.6; padding: 0;">简体</a>
-  </div>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amy Ho｜房產觀測站</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=Noto+Serif+TC:wght@300;400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #1a1714; --paper: #f5f0e8; --accent: #8b6f47; --muted: #7a6e63; --line: rgba(139, 111, 71, 0.25); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', 'Noto Serif TC', sans-serif; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; background: rgba(245, 240, 232, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .nav-brand { line-height: 1.2; }
+    .nav-menu { position: fixed; top: 0; right: 0; width: min(350px, 85vw); height: 100dvh; background: var(--ink); padding: 5rem 2.5rem; transform: translateX(100%); transition: transform 0.4s ease; z-index: 1001; display: flex; flex-direction: column; gap: 0.8rem; }
+    .nav-menu.open { transform: translateX(0); }
+    .nav-menu a { color: #fff; text-decoration: none; font-size: 1.1rem; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+    .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none; z-index: 1000; transition: opacity 0.3s; }
+    .nav-overlay.open { opacity: 1; pointer-events: auto; }
+    header { padding: 12rem 2rem 4rem; max-width: 900px; margin: 0 auto; }
+    .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 6rem); font-weight: 300; }
+    .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; padding: 0 2rem 5rem; max-width: 900px; margin: 0 auto; }
+    .article-card { border: 1px solid var(--line); padding: 2.5rem 2rem; text-decoration: none; color: inherit; display: block; transition: 0.3s; }
+    .article-card:hover { border-color: var(--accent); background: #fff; transform: translateY(-5px); }
+  </style>
+</head>
+<body>
 
+<nav>
+  <div class="nav-brand">
+    <span style="font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.2rem;">Amy Ho</span><br>
+    <span style="font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted);">房產觀測站</span>
+  </div>
+  <button id="menuBtn" style="background:none; border:none; cursor:pointer; padding: 10px;">
+    <div style="width:25px; height:1.5px; background:var(--ink); margin:6px 0;"></div>
+    <div style="width:25px; height:1.5px; background:var(--ink); margin:6px 0;"></div>
+    <div style="width:25px; height:1.5px; background:var(--ink); margin:6px 0;"></div>
+  </button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay"></div>
+
+<div class="nav-menu" id="navMenu">
+  <div style="padding-bottom: 1rem; border-bottom: 2px solid var(--accent); margin-bottom: 1rem; display: flex; gap: 1.5rem;">
+    <a href="#" style="border: none; color: var(--accent); font-weight: 600; font-size: 0.9rem; padding: 0;">繁體中文</a>
+    <a href="/index-cn.html" style="border: none; opacity: 0.5; font-size: 0.9rem; padding: 0;">简体中文</a>
+  </div>
   <a href="/">首頁</a>
   <a href="#experience">我們的經驗</a>
   <a href="#recent-sales">近期成交</a>
@@ -12,5 +52,30 @@
   <a href="/articles-tw.html">市場洞察</a>
   <a href="#testimonials">客戶回饋</a>
   <a href="#about">關於 Amy & Jonas</a>
-  <a href="mailto:amy@amyhorealestate.com" class="cta-link">預約市場分析</a>
+  <a href="mailto:amy@amyhorealestate.com" style="color:var(--accent); border:1px solid var(--accent); text-align:center; margin-top:1.5rem; padding:0.8rem;">預約市場分析</a>
 </div>
+
+<header>
+  <p style="color:var(--accent); letter-spacing:0.3em; font-size:0.75rem; margin-bottom:1rem; font-weight: 500;">BARFOOT & THOMPSON · PARNELL · AUCKLAND</p>
+  <h1 class="hero-name">Amy Ho</h1>
+  <p style="font-size:1.2rem; color:var(--muted); letter-spacing: 0.1em;">房產經紀人</p>
+  <p style="line-height: 2; color: var(--muted); max-width: 600px; margin-top: 1.5rem;">深耕奧克蘭房產市場，專注服務華人買家與賣家。協助客戶在奧克蘭複雜的房市中做出清晰決策。</p>
+</header>
+
+<div class="article-grid">
+  <a href="/articles-tw.html" class="article-card">
+    <p style="color:var(--accent); font-size:0.7rem; letter-spacing:0.1em; margin-bottom:0.5rem;">TRADITIONAL CHINESE</p>
+    <h3 style="font-size:1.5rem; font-weight:400;">市場洞察 (繁)</h3>
+    <p style="color:var(--muted); margin-top:0.5rem;">市場動態、投資策略與生活指南</p>
+  </a>
+</div>
+
+<script>
+  const btn = document.getElementById('menuBtn');
+  const menu = document.getElementById('navMenu');
+  const overlay = document.getElementById('navOverlay');
+  btn.addEventListener('click', () => { menu.classList.toggle('open'); overlay.classList.toggle('open'); });
+  overlay.addEventListener('click', () => { menu.classList.remove('open'); overlay.classList.remove('open'); });
+</script>
+</body>
+</html>
