@@ -1,8 +1,114 @@
 [
   {
-    "id": "test-article",
-    "title": "測試文章：奧克蘭房市分析",
-    "date": "2026-05-13",
+    "id": "auckland-property-market-2025",
+    "title_tw": "2025 奧克蘭房市年度分析",
+    "title_cn": "2025 奥克兰房市年度分析",
+    "date": "2025-02-20",
+    "category": "市場趨勢"
+  },
+  {
+    "id": "vendor-report-before-auction",
+    "title_tw": "拍賣前的屋主報告：成交的關鍵細節",
+    "title_cn": "拍卖前的屋主报告：成交的关键细节",
+    "date": "2025-03-05",
+    "category": "專家建議"
+  },
+  {
+    "id": "auckland-central-house-selling-case-study",
+    "title_tw": "奧克蘭市中心住宅成交案例分析",
+    "title_cn": "奥克兰市中心住宅成交案例分析",
+    "date": "2025-04-12",
+    "category": "成交案例"
+  },
+  {
+    "id": "auckland-property-pricing-mistake",
+    "title_tw": "奧克蘭房產定價常見錯誤",
+    "title_cn": "奥克兰房产定价常见错误",
+    "date": "2025-05-18",
+    "category": "投資策略"
+  },
+  {
+    "id": "property-buying-priorities",
+    "title_tw": "置業優先級：如何挑選最適合的房產",
+    "title_cn": "置业优先级：如何挑选最适合的房产",
+    "date": "2025-06-22",
+    "category": "買方指南"
+  },
+  {
+    "id": "auckland-auction-high-end-market",
+    "title_tw": "奧克蘭高端市場拍賣洞察",
+    "title_cn": "奥克兰高端市场拍卖洞察",
+    "date": "2025-08-14",
+    "category": "市場趨勢"
+  },
+  {
+    "id": "auckland-property-market-feb-2026-report-cn",
+    "title_tw": "2026 年 2 月奧克蘭房市報告",
+    "title_cn": "2026 年 2 月奥克兰房市报告",
+    "date": "2026-02-10",
+    "category": "市場趨勢"
+  },
+  {
+    "id": "auckland-property-market-change",
+    "title_tw": "奧克蘭房市結構性變化分析",
+    "title_cn": "奥克兰房市结构性变化分析",
+    "date": "2026-03-01",
+    "category": "市場趨勢"
+  },
+  {
+    "id": "iran-war-property-prices",
+    "title_tw": "地緣政治與房價：以伊朗局勢為例",
+    "title_cn": "地缘政治与房价：以伊朗局势为例",
+    "date": "2026-03-15",
+    "category": "風險分析"
+  },
+  {
+    "id": "epsom-dgz-new-townhouse-cv-analysis",
+    "title_tw": "Epsom 雙文法特區聯排別墅 CV 分析",
+    "title_cn": "Epsom 双文法特区联排别墅 CV 分析",
+    "date": "2026-03-25",
+    "category": "區域分析"
+  },
+  {
+    "id": "1-dollar-reserve-auction-auckland",
+    "title_tw": "奧克蘭 1 元起拍拍賣實錄",
+    "title_cn": "奥克兰 1 元起拍拍卖实录",
+    "date": "2026-04-02",
+    "category": "拍賣動態"
+  },
+  {
+    "id": "auction-case-study-parnell-meadowbank-market-insights",
+    "title_tw": "Parnell 與 Meadowbank 拍賣案例研究",
+    "title_cn": "Parnell 与 Meadowbank 拍卖案例研究",
+    "date": "2026-04-10",
+    "category": "成交案例"
+  },
+  {
+    "id": "nz-property-2026-interest-rate-inflation-outlook",
+    "title_tw": "2026 紐西蘭利率與通膨展望",
+    "title_cn": "2026 新西兰利率与通胀展望",
+    "date": "2026-04-18",
+    "category": "經濟預測"
+  },
+  {
+    "id": "nz-luxury-property-safe-haven-global-capital",
+    "title_tw": "紐西蘭高端房產：全球避險資金的安全島",
+    "title_cn": "新西兰高端房产：全球避险资金的安全岛",
+    "date": "2026-04-25",
+    "category": "專家建議"
+  },
+  {
+    "id": "ai-tenant-claims-nz-landlord-strategy",
+    "title_tw": "AI 助攻索賠：房東如何應對租客升級？",
+    "title_cn": "AI 助攻索赔：房东如何应对租客升级？",
+    "date": "2026-05-01",
+    "category": "風險分析"
+  },
+  {
+    "id": "mortgagee-sales-auckland-2026-forced-auctions",
+    "title_tw": "2026 奧克蘭銀行強制拍賣趨勢",
+    "title_cn": "2026 奥克兰银行强制拍卖趋势",
+    "date": "2026-05-10",
     "category": "市場趨勢"
   }
 ]
